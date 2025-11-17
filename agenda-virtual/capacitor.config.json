@@ -1,0 +1,6 @@
+{
+  "appId": "com.nuevacanaan.agenda",
+  "appName": "Agenda Virtual U.E. Nueva Canaan",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

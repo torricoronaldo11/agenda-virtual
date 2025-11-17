@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Agenda Virtual U.E. Nueva Canaán</title>
+
+    <!-- Progressive Web App -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icono.png" />
+    <meta name="theme-color" content="#0c9117" />
+
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Metadatos adicionales -->
+    <meta name="description" content="Agenda virtual de la Unidad Educativa Técnica Humanística Nueva Canaán" />
+</head>
+
+<body>
+    <header class="top-header" role="banner">
+        <img src="logo.jpg" class="logo-mini" alt="Logo Nueva Canaán" />
+        <h1>UNIDAD EDUCATIVA TÉCNICO HUMANÍSTICO "NUEVA CANAÁN" — Agenda Virtual</h1>
+    </header>
+
+    <div class="app">
+        <aside class="sidebar" role="complementary">
+            <div class="brand">
+                <img src="icono.png" class="logo-mini" alt="Icono Agenda Virtual" />
+                <h2>AGENDA - VIRTUAL</h2>
+            </div>
+
+            <!-- Caja de autenticación: renderizado por app.js -->
+            <div id="authBox" class="auth-box" aria-live="polite"></div>
+
+            <nav class="menu card" aria-label="Menú principal">
+                <button id="btnPanel" class="btn full">Panel Principal</button>
+                <button id="btnCrear" class="btn full">Crear Actividad</button>
+                <button id="btnExport" class="btn full">Exportar</button>
+                <button id="btnImport" class="btn full">Importar</button>
+                <input id="fileImport" type="file" accept="application/json" style="display:none" />
+                <button id="btnCSV" class="btn full">Descargar</button>
+                <button id="btnPrint" class="btn full">Imprimir / PDF</button>
+                <button id="btnLogout" class="btn full danger hidden">Cerrar sesión</button>
+            </nav>
+
+            <div class="small card">
+                <strong>Filtrar</strong>
+                <input id="filterDate" type="date" />
+                <select id="filterCourse" aria-label="Filtrar por curso">
+          <option value="">Todos los cursos</option>
+          <option>1ro</option>
+          <option>2do</option>
+          <option>3ro</option>
+          <option>4to</option>
+          <option>5to</option>
+          <option>6to</option>
+          <option>Direccion</option>
+          <option>Docente</option>
+        </select>
+
+                <select id="filterType" aria-label="Filtrar por tipo">
+          <option value="">Todos los tipos</option>
+          <option>Tarea</option>
+          <option>Examen</option>
+          <option>Evento</option>
+          <option>Reunión</option>
+        </select>
+
+                <input id="filterText" placeholder="Buscar texto..." />
+            </div>
+
+            <div class="card small">
+                <strong>Usuarios existentes (Registrados)</strong>
+                <!-- Lista rellenada por renderDemoUsers() -->
+                <ul id="demoUsers" class="user-list" aria-live="polite"></ul>
+            </div>
+        </aside>
+
+        <main class="main" role="main">
+            <section id="panelMain" class="panel card">
+                <h2 id="welcomeTitle">Bienvenido</h2>
+                <p id="welcomeSubtitle">Inicia sesión o regístrate para continuar.</p>
+            </section>
+
+            <section id="createSection" class="card hidden" aria-hidden="true">
+                <h2>Crear / Editar Actividad</h2>
+                <form id="formActivity" class="form">
+                    <input id="actId" type="hidden" />
+                    <label>Título <input id="actTitle" required /></label>
+                    <label>Fecha <input id="actDate" type="date" required /></label>
+                    <label>Hora <input id="actTime" type="time" /></label>
+                    <label>Curso
+            <select id="actCourse">
+              <option>1ro</option>
+              <option>2do</option>
+              <option>3ro</option>
+              <option>4to</option>
+              <option>5to</option>
+              <option>6to</option>
+              <option>Direccion</option>
+              <option>Docente</option>
+            </select>
+          </label>
+                    <label>Tipo
+            <select id="actType">
+              <option>Tarea</option>
+              <option>Examen</option>
+              <option>Evento</option>
+              <option>Reunión</option>
+              <option>Otro</option>
+            </select>
+          </label>
+                    <label>Descripción <textarea id="actDesc"></textarea></label>
+
+                    <div class="form-actions">
+                        <button id="saveAct" class="btn">Guardar</button>
+                        <button id="cancelAct" type="button" class="btn ghost">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="listSection" class="card">
+                <h2>Actividades</h2>
+                <div id="listActions" class="list-actions">
+                    <small id="countInfo">0 actividades</small>
+                </div>
+                <div id="activitiesList" class="activities-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Plantilla de actividad -->
+    <template id="activityTemplate">
+    <div class="actividad card">
+      <div class="actividad-head">
+        <div>
+          <h3 class="act-title"></h3>
+          <div class="meta"><span class="act-date"></span> • <span class="act-course"></span> • <span class="act-type"></span></div>
+        </div>
+        <div class="actions">
+          <button class="btn small edit">Editar</button>
+          <button class="btn small danger delete">Eliminar</button>
+        </div>
+      </div>
+      <p class="act-desc"></p>
+      <div class="actividad-foot"><small class="act-created"></small></div>
+    </div>
+  </template>
+
+    <!-- script principal: cargar con defer para que el DOM exista -->
+    <script src="app.js" defer></script>
+
+    <!-- Registrar el Service Worker: se ejecuta cuando la página carga (defer en app.js asegura orden) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker registrado 👍'))
+                .catch(err => console.log('Error al registrar SW:', err));
+        }
+    </script>
+
+    <noscript>Esta aplicación funciona mejor con JavaScript activo.</noscript>
+</body>
+
+</html>

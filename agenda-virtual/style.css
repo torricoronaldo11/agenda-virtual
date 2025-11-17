@@ -1,0 +1,35 @@
+/* simplified style */
+:root{--bg:#0c9117;--card:#dad0c8;--primary:#1686e2;--danger:#ef4444;--radius:12px}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial;background:linear-gradient(180deg,#eef2ff 0%,#0c9117 100%);min-height:100vh;color:#0d0d0e}
+.top-header{width:100%;background:rgba(255,255,255,0.6);padding:10px 20px;display:flex;align-items:center;gap:15px;position:fixed;top:0;left:0;backdrop-filter:blur(5px);z-index:10}
+.top-header h1{font-size:20px;margin:0;color:#013220}
+.logo-mini{width:56px;height:56px;object-fit:contain;border-radius:8px}
+.app{display:flex;gap:20px;padding:100px 20px 40px;max-width:1200px;margin:0 auto}
+.sidebar{width:300px;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 6px 18px rgba(9,30,66,0.08)}
+.brand h2{margin:0;color:var(--primary)}
+.auth-box{background:rgba(255,255,255,0.6);padding:12px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
+.menu .btn{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:none;cursor:pointer;background:#e2e2df;color:var(--primary);font-weight:600}
+.btn{padding:8px 16px;border-radius:8px;border:none;background:var(--primary);color:#fff;cursor:pointer}
+.btn.full{width:100%}
+.btn.ghost{background:transparent;border:1px solid #e6eef9;color:var(--primary)}
+.btn.small{padding:6px 8px;font-size:13px}
+.btn.danger{background:var(--danger)}
+.small{padding:12px;font-size:14px}
+.user-list{list-style:none;padding:0;margin:8px 0 0 0;font-size:13px;color:#101111}
+.user-list li{padding:8px 6px;border-bottom:1px dashed #0f8a38;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.main{flex:1;display:flex;flex-direction:column;gap:16px}
+.panel{display:flex;flex-direction:column;gap:10px}
+.hidden{display:none!important}
+.form label{display:block;margin:10px 0;font-size:14px;color:#0f172a}
+.form input,.form textarea,.form select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef9}
+.activities-list{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.actividad{padding:12px;border-radius:10px;background:#e7dad5}
+.actividad-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.actividad h3{margin:0;font-size:17px}
+.meta{color:#101111;font-size:13px;margin-top:6px}
+.act-desc{margin:10px 0 0 0;color:#111827}
+.act-created{color:#6b7280}
+.list-actions{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.deleteUserBtn{background:transparent;border:1px solid var(--danger);color:var(--danger);padding:6px 8px;border-radius:8px;cursor:pointer}
+@media(max-width:900px){.app{flex-direction:column;padding:12px}.sidebar{width:100%;order:2}.main{order:1}}

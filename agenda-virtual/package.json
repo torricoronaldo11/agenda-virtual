@@ -1,0 +1,10 @@
+{
+  "name": "agenda-virtual-ue-nueva-canaan",
+  "version": "1.0.0",
+  "description": "Agenda Virtual PWA/Capacitor (demo)",
+  "scripts": {
+    "start": "serve www",
+    "build": "echo build"
+  },
+  "dependencies": {}
+}
